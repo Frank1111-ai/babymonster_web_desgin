@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>BABYMONSTER 成員介紹</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(#111, #000);
+      font-family: 'Segoe UI', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .container {
+      display: flex;
+      max-width: 1200px;
+      width: 100%;
+      height: 600px;
+      position: relative;
+      align-items: center;
+      margin-right: 180px; /* ← 改這裡 */
+    }
+
+    .member-wrapper {
+      position: relative;
+      width: 520px;
+      height: 580px;
+      transition: transform 1s ease;
+      animation: floatCard 2s ease-out;
+    }
+
+    @keyframes floatCard {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-6px); }
+    }
+
+    .bg-squares {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      z-index: 0;
+    }
+
+  .bg-square {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  border-radius: 24px;
+  background: rgba(255, 0, 102, 0.1);
+  box-shadow: 0 0 60px rgba(255, 0, 102, 0.3);
+  transform-origin: bottom left;
+  opacity: 0;
+}
+
+.bg-square:nth-child(1) {
+  --rotate-angle: -15deg;
+}
+.bg-square:nth-child(2) {
+  --rotate-angle: 5deg;
+}
+.bg-square:nth-child(3) {
+  --rotate-angle: 25deg;
+}
+
+.fan-animate {
+  animation: fanOpen 1s ease-out forwards;
+}
+
+
+    @keyframes fanOpen {
+      0% { transform: rotate(-90deg) scale(0.4); opacity: 0; }
+      100% { transform: rotate(var(--rotate-angle)) scale(1); opacity: 1; }
+    }
+
+    .member-photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      object-fit: cover;
+      z-index: 1;
+      transition: all 0.4s ease;
+      
+    }
+
+    .fade-out {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .info-panel {
+      width: 600px;
+      padding-left: 40px;
+      opacity: 1;
+      transition: all 0.6s ease;
+    }
+
+    .info-panel .name {
+      font-size: 2em;
+      font-weight: bold;
+      color: #ff3377;
+      margin-bottom: 20px;
+      padding-left: 100px;
+    }
+
+    .info-panel .desc {
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #eee;
+      padding-left: 100px;
+    }
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -130px; /* 預設藏起來（只留30px寬） */
+  width: 180px;
+  height: 100vh;
+  background: rgba(255, 0, 102, 0.792);
+  color: white;
+  z-index: 1000;
+  transition: right 0.3s ease;
+}
+
+.sidebar:hover {
+  right: 0;
+}
+
+.sidebar-content {
+  padding: 20px;
+}
+
+.sidebar-content h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  padding-bottom: 5px;
+}
+
+.sidebar-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-content li {
+  margin: 10px 0;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.sidebar-content li:hover {
+  color: #03000afa;
+}
+.sidebar-content a {
+  color: white;
+    text-decoration: none; /* 如果你也不想要底線 */
+
+}
+.sidebar-content a:hover {
+  color: #03000afa;
+    text-decoration:dotted;
+
+}
+.section-title {
+  color: #fffc66;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+ .scroll-hint {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.1em;
+    color: rgba(255, 255, 255, 0.7);
+    animation: blink 2s infinite;
+    pointer-events: none;
+    z-index: 1001;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+  }
+  </style>
+</head>
+<body>
+  <div class="scroll-hint">滑動滑鼠滾輪以切換成員介紹</div>
+<div class="sidebar">
+  <div class="sidebar-content">
+    <h3>BABYMONSTER</h3>
+    <ul>
+      <li class="section-title">成員</li>
+      <li onclick="updateMember(0)" class="section-title-member">Ruka</li>
+      <li onclick="updateMember(1)" class="section-title-member">Chiquita</li>
+      <li onclick="updateMember(2)" class="section-title-member">Ahyeon</li>
+      <li onclick="updateMember(3)" class="section-title-member">Pharita</li>
+      <li onclick="updateMember(4)" class="section-title-member">Rora</li>
+      <li onclick="updateMember(5)" class="section-title-member">ASA</li>
+      <li onclick="updateMember(6)" class="section-title-member">Rami</li>
+
+
+      <li class="section-title">其他頁面 (專輯介紹!)</li>
+       <li><a href="babymobster_album.html">Introduce Album</a></li>
+       <!-- <li><a href="member2.html">2 stay</a></li>      -->
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+  <div class="member-wrapper">
+    <div class="bg-squares">
+      <div class="bg-square"></div>
+      <div class="bg-square"></div>
+      <div class="bg-square"></div>
+    </div>
+    <img class="member-photo" id="memberPhoto" src="RUKA.png" alt="成員" />
+  </div>
+
+  <div class="info-panel">
+    <div class="name" id="memberName">RUKA - BABYMONSTER</div>
+    <div class="desc" id="memberDesc">
+      RUKA 是來自日本的多才成員，擅長舞蹈與說唱，是 BABYMONSTER 中的強力主舞。
+      她擁有銳利的舞台表現與強大氣場，深受粉絲喜愛。
+    </div>
+  </div>
+</div>
+
+<script>
+  const members = [
+    {
+      name: "Ruka - BABYMONSTER",
+      image: "RUKA.png",
+      desc: "RUKA 是來自日本的多才成員，擅長舞蹈與說唱，是 BABYMONSTER 中的強力主舞。她擁有銳利的舞台表現與強大氣場，深受粉絲喜愛。"
+    },
+    {
+      name: "Chiquita - BABYMONSTER",
+      image: "chiquita1.png",
+      desc: "ASA 是團體中的饒舌主力，擁有冷靜氣質與強烈個性，創作能力與風格鮮明，是團隊的創意來源之一。"
+    },
+    {
+      name: "Ahyeon - BABYMONSTER",
+      image: "Ahyeon.png",
+      desc: "AHYEON 以高超的 vocal 實力與精湛表演著稱，能駕馭多種音樂風格，展現無可比擬的多樣魅力。"
+    },
+    {
+      name: "Pharita - BABYMONSTER",
+      image: "Pharita2.png",
+      desc: "AHYEON 以高超的 vocal 實力與精湛表演著稱，能駕馭多種音樂風格，展現無可比擬的多樣魅力。"
+    },
+    {
+      name: "Rora - BABYMONSTER",
+      image: "Rora2.png",
+      desc: "AHYEON 以高超的 vocal 實力與精湛表演著稱，能駕馭多種音樂風格，展現無可比擬的多樣魅力。"
+    },
+    {
+      name: "ASA - BABYMONSTER",
+      image: "ASA.png",
+      desc: "AHYEON 以高超的 vocal 實力與精湛表演著稱，能駕馭多種音樂風格，展現無可比擬的多樣魅力。"
+    },
+    {
+      name: "Rami - BABYMONSTER",
+      image: "Rami.png",
+      desc: "AHYEON 以高超的 vocal 實力與精湛表演著稱，能駕馭多種音樂風格，展現無可比擬的多樣魅力。"
+    },
+  ];
+
+  let currentIndex = 0;
+  let isSwitching = false;
+
+  const photo = document.getElementById("memberPhoto");
+  const nameEl = document.getElementById("memberName");
+  const descEl = document.getElementById("memberDesc");
+
+function updateMember(index) {
+  photo.classList.add("fade-out");
+  nameEl.classList.add("fade-out");
+  descEl.classList.add("fade-out");
+
+  // 重新觸發背景扇形動畫
+  const squares = document.querySelectorAll('.bg-square');
+  squares.forEach(sq => {
+    sq.classList.remove('fan-animate');
+    // 強制重繪一次再加回 class，才能重新觸發動畫
+    void sq.offsetWidth;
+    sq.classList.add('fan-animate');
+  });
+
+  setTimeout(() => {
+    photo.src = members[index].image;
+    nameEl.textContent = members[index].name;
+    descEl.textContent = members[index].desc;
+
+    photo.classList.remove("fade-out");
+    nameEl.classList.remove("fade-out");
+    descEl.classList.remove("fade-out");
+  }, 400);
+}
+
+
+ // ✅ 頁面載入時直接播放背景動畫
+  window.addEventListener("DOMContentLoaded", () => {
+    const squares = document.querySelectorAll('.bg-square');
+    squares.forEach(sq => {
+      sq.classList.add('fan-animate');
+    });
+  });
+
+  window.addEventListener('wheel', (e) => {
+    if (isSwitching) return;
+    isSwitching = true;
+
+    if (e.deltaY > 0) {
+      currentIndex = (currentIndex + 1) % members.length;
+    } else {
+      currentIndex = (currentIndex - 1 + members.length) % members.length;
+    }
+
+    updateMember(currentIndex);
+
+    setTimeout(() => isSwitching = false, 1000);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>BABYMONSTER 專輯轉盤</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(#111, #000);
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+
+    header {
+      text-align: center;
+      font-size: 2.4em;
+      color: #ff3377;
+      padding: 40px 0 10px;
+    }
+
+    .carousel {
+      position: relative;
+      width: 100%;
+      height: 1000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+      overflow: hidden;
+    }
+
+    .album-track {
+      position: relative;
+      margin-right: 26%;
+      width: 100%;
+      height: 100%;
+    }
+
+    .album {
+      width: 450px;
+      height: 700px;
+      background: #222;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(255, 51, 119, 0.075);
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform-origin: center center;
+    }
+
+    .album img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.9);
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      color: #fff;
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #000;
+    }
+    .back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  /* background: #ff3377; */
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: background 0.3s, transform 0.2s;
+  z-index: 999;
+}
+
+.back-button:hover {
+  background: #ff0055;
+  transform: scale(1.05);
+}
+
+ .scroll-hint {
+    position: fixed;
+    bottom: 20px;
+    right: 0.01%;
+    transform: translateX(-50%);
+    font-size: 1.1em;
+    color: rgba(255, 255, 255, 0.7);
+    animation: blink 2s infinite;
+    pointer-events: none;
+    z-index: 1001;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+  }
+  </style>
+</head>
+<body>
+  <div class="scroll-hint">滑動滑鼠滾輪以切換成員介紹</div>
+<a href="index.html" class="back-button">← 返回首頁</a>
+  <header>BABYMONSTER 歷年專輯</header>
+
+<div class="carousel">
+  <div class="album-track" id="track">
+    <!-- 2023 -->
+    <div class="album"><img src="Batter_up.jpg"><div class="caption">2023 - BATTER UP</div></div>
+    <!-- 2024 -->
+    <div class="album"><img src="forever.jpg"><div class="caption">2024 - FOREVER</div></div>
+    <div class="album"><img src="sheese.jpg"><div class="caption">2024 - SHEESH</div></div>
+    <div class="album"><img src="dream.jpg"><div class="caption">2024 - DREAM</div></div>
+    <!-- 2025 -->
+    <div class="album"><img src="drip.jpg"><div class="caption">2025 - DRIP</div></div>
+    <div class="album"><img src="love in my heart1.jpg"><div class="caption">2025 - LOVE IN MY HEART</div></div>
+
+
+  </div>
+</div>
+
+<script>
+  const albums = Array.from(document.querySelectorAll('.album'));
+  let centerIndex = 1; // 初始在中間
+
+function updateView() {
+  const total = albums.length;
+
+  albums.forEach((album, i) => {
+    let offset = i - centerIndex;
+
+    // 無限循環邏輯
+    if (offset < -Math.floor(total / 2)) offset += total;
+    if (offset > Math.floor(total / 2)) offset -= total;
+
+    const scale = 1 - Math.abs(offset) * 0.2;
+    const zIndex = 10 - Math.abs(offset);
+    const angle = offset * 25;
+    const opacity = Math.abs(offset) > 2 ? 0 : 1;
+
+    album.style.transform = `
+      translateX(${offset * 240}px)
+      scale(${scale})
+      rotateY(${angle}deg)
+    `;
+    album.style.zIndex = zIndex;
+    album.style.opacity = opacity;
+
+    // 加亮與變暗效果
+    const img = album.querySelector('img');
+    if (offset === 0) {
+      album.style.boxShadow = "0 0 40px rgba(255, 51, 119, 0.8)";
+      img.style.filter = "brightness(1.1) saturate(1.2)";
+    } else {
+      album.style.boxShadow = "0 4px 20px rgba(0,0,0,0.3)";
+      img.style.filter = "brightness(0.5)";
+    }
+  });
+}
+
+
+  updateView();
+
+  // 加入防止過快滾動
+  let scrollLock = false;
+  window.addEventListener('wheel', (e) => {
+    if (scrollLock) return;
+    scrollLock = true;
+
+    if (e.deltaY > 0) {
+      centerIndex = (centerIndex + 1) % albums.length;
+    } else {
+      centerIndex = (centerIndex - 1 + albums.length) % albums.length;
+    }
+
+    updateView();
+    setTimeout(() => scrollLock = false, 400); // 解鎖
+  }, { passive: true });
+</script>
+
+</body>
+</html>
